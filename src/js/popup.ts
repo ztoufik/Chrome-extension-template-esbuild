@@ -1,7 +1,17 @@
 const root = document.querySelector('#root');
 const btn = document.createElement('button');
-btn.textContent = "click here";
-btn.onclick=()=>{
-    console.log("clicked")
+const text = document.createElement('p');
+
+btn.innerText="call api";
+function setData(data){
+    text.innerText=data;
 }
+
+btn.onclick=async () => {
+    let response= await chrome.runtime.sendMessage({greeting: "hello"});
+    console.log("from popup",response);
+    setData(response.title)
+};
+
 root.appendChild(btn);
+root.appendChild(text);
