@@ -1,5 +1,6 @@
 async function processData(){
-    let response=await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    //Jlet response=await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    let response=await fetch('http://127.0.0.1:3000/');
     let json=await response.json();
     console.log("from background",json);
     //console.log("from background",request);

@@ -10,7 +10,7 @@ function setData(data){
 btn.onclick=async () => {
     let response= await chrome.runtime.sendMessage({greeting: "hello"});
     console.log("from popup",response);
-    setData(response.title)
+    setData(response.name)
 };
 
 root.appendChild(btn);
