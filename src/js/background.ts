@@ -3,7 +3,6 @@ async function processData(){
     let response=await fetch('http://localhost:3000/');
     let json=await response.json();
     console.log("from background",json);
-    //console.log("from background",request);
     return json;
 }
 
