@@ -8,39 +8,42 @@ const connectBack=async () => {
     setData(response.name)
 };
 
+function setData(data){
+    text.innerText=data;
+}
+
 const connectWS=async () => {
-    let socket = new WebSocket("wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self");
+    let socket = new WebSocket("ws://localhost:8080/","echo-protocol");
     socket.onopen = function(e) {
-        alert("[open] Connection established");
-        alert("Sending to server");
+        console.log("[open] Connection established");
+        console.log("Sending to server");
         socket.send("My name is John");
     };
 
     socket.onmessage = function(event) {
-        alert(`[message] Data received from server: ${event.data}`);
+        console.log(`[message] Data received from server: ${event.data}`);
     };
 
     socket.onclose = function(event) {
         if (event.wasClean) {
-            alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+            console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
         } else {
             // e.g. server process killed or network down
             // event.code is usually 1006 in this case
-            alert('[close] Connection died');
+            console.log('[close] Connection died');
         }
     };
 
     socket.onerror = function(error) {
-        alert(`[error]`);
+        console.log(error);
+        setData(JSON.stringify(error));
+        console.log(`[error]`);
     };
 }
 
 btn.innerText="call api";
 
-function setData(data){
-    text.innerText=data;
-}
 
-btn.onclick=connectWS
+btn.onclick=connectBack
 root.appendChild(btn);
 root.appendChild(text);
