@@ -12,7 +12,7 @@ function setData(data){
     text.innerText=data;
 }
 
-const connectContent=async()=>{
+const connectContent=()=>{
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {type:"getText"}, function(response){
         console.log(response);
@@ -21,7 +21,7 @@ const connectContent=async()=>{
 });
 }
 
-const connectWS=async () => {
+const connectWS=() => {
     let socket = new WebSocket("ws://localhost:8080/","echo-protocol");
     socket.onopen = function(e) {
         console.log("[open] Connection established");
@@ -31,6 +31,7 @@ const connectWS=async () => {
 
     socket.onmessage = function(event) {
         console.log(`[message] Data received from server: ${event.data}`);
+        connectContent();
     };
 
     socket.onclose = function(event) {
@@ -52,7 +53,7 @@ const connectWS=async () => {
 
 btn.innerText="call api";
 
-btn.onclick=connectContent;
+btn.onclick=connectWS;
 
 root.appendChild(btn);
 root.appendChild(text);
