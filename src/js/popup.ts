@@ -13,7 +13,6 @@ function setData(data){
 }
 
 const connectWS=async () => {
-    //let socket = new WebSocket("wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self");
     let socket = new WebSocket("ws://localhost:8080/","echo-protocol");
     socket.onopen = function(e) {
         console.log("[open] Connection established");
@@ -44,8 +43,7 @@ const connectWS=async () => {
 
 btn.innerText="call api";
 
-
-btn.onclick=connectWS
+btn.onclick=connectWS;
 
 root.appendChild(btn);
 root.appendChild(text);
