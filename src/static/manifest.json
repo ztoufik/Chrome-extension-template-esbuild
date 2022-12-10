@@ -4,6 +4,10 @@
     "manifest_version": 3,
     "action": {"default_popup": "popup.html"},
     "description": "my chrome ext",
+    "content_scripts": [{
+        "matches": [ "http://*/*", "https://*/*"],
+        "js": ["js/content.js"]
+    }],
     "background": {
         "service_worker": "js/background.js"
     },

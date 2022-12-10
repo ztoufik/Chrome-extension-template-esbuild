@@ -8,6 +8,8 @@ async function processData(){
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        // chrome.runtime doesn't support async/await
+        // we use promise (then.catch syntax)
         processData().then(sendResponse);
         return true;
     }

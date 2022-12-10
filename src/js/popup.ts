@@ -12,6 +12,15 @@ function setData(data){
     text.innerText=data;
 }
 
+const connectContent=async()=>{
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {type:"getText"}, function(response){
+        console.log(response);
+        setData(response.status);
+    });
+});
+}
+
 const connectWS=async () => {
     let socket = new WebSocket("ws://localhost:8080/","echo-protocol");
     socket.onopen = function(e) {
@@ -43,7 +52,7 @@ const connectWS=async () => {
 
 btn.innerText="call api";
 
-btn.onclick=connectWS;
+btn.onclick=connectContent;
 
 root.appendChild(btn);
 root.appendChild(text);
