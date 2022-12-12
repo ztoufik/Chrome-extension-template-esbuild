@@ -1,6 +1,8 @@
 const root = document.querySelector('#root');
-const btn = document.createElement('button');
+const btn_api = document.createElement('button');
+const btn_send = document.createElement('button');
 const text = document.createElement('p');
+let ss=new Map();
 
 const connectBack=async () => {
     let response= await chrome.runtime.sendMessage({greeting: "hello"});
@@ -23,6 +25,7 @@ const connectContent=()=>{
 
 const connectWS=() => {
     let socket = new WebSocket("ws://localhost:8080/","echo-protocol");
+    ss["test"]=socket;
     socket.onopen = function(e) {
         console.log("[open] Connection established");
         console.log("Sending to server");
@@ -31,7 +34,7 @@ const connectWS=() => {
 
     socket.onmessage = function(event) {
         console.log(`[message] Data received from server: ${event.data}`);
-        connectContent();
+        //connectContent();
     };
 
     socket.onclose = function(event) {
@@ -49,11 +52,18 @@ const connectWS=() => {
         setData(JSON.stringify(error));
         console.log(`[error]`);
     };
+
+    btn_api.onclick=()=>{
+        console.log("sending data");
+        socket.send("hello there");
+    }
 }
 
-btn.innerText="call api";
+btn_api.innerText="call api";
+btn_send.innerText="send";
 
-btn.onclick=connectWS;
+btn_api.onclick=connectWS;
 
-root.appendChild(btn);
+root.appendChild(btn_api);
+root.appendChild(btn_send);
 root.appendChild(text);

@@ -22,8 +22,7 @@ const launchExpServer=(ws)=>{
 
     app.post('/add', function(req,res) {
         console.log(req.body.login);
-        const {login,password}=req.body;
-        ws.send(login);
+        ws.send(JSON.stringify(req.body));
         res.status(201).json(req.body.name);
     });
 
